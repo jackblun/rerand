@@ -5,10 +5,14 @@ from utils.data_checks import (
     check_max_reps,
     check_tol,
 )
+import logging
+
+logging.basicConfig(level=logging.NOTSET)
 
 
 class Randomisation:
     def __init__(self, covariates, distance_metric, tol, max_reps):
+        logging.info("Initialising Randomisation class")
         self.covariates = covariates
         self.tol = tol
         self.max_reps = max_reps
@@ -27,13 +31,20 @@ class Randomisation:
             x1 = self.covariates[t]
 
             dist = self.distance(x0, x1)
+            logging.info(
+                "Randomisation: "
+                + str(i + 1)
+                + ", Distance = "
+                + str(np.round(dist, 2))
+            )
+
             if dist < self.tol:
-                print(
-                    str(i) + " randomisations needed to achieve balance"
+                logging.info(
+                    str(i + 1) + " randomisations needed to achieve balance"
                     " with tolerance " + str(self.tol)
                 )
                 return t
-        print("Did not achieve balance for tolerance " + str(self.tol))
+        logging.warning("Did not achieve balance, tolerance " + str(self.tol))
 
     def distance(self, x0, x1, metric="Euclidean"):
         """
