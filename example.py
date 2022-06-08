@@ -2,7 +2,6 @@ import rerand
 import numpy as np
 
 x = np.random.normal(0, 1, 100)
-x
 dis = "Euclidean"
 tol = 0.1
 max_reps = 100
