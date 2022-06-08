@@ -1,13 +1,21 @@
 import numpy as np
+from utils.data_checks import (
+    check_data,
+    check_distance_metric,
+    check_max_reps,
+    check_tol,
+)
 
 
 class Randomisation:
     def __init__(self, covariates, distance_metric, tol, max_reps):
         self.covariates = covariates
-        self.distance_metric = distance_metric
         self.tol = tol
         self.max_reps = max_reps
-        self.n = len(covariates)
+        self.distance_metric = distance_metric
+        self.n = len(self.covariates)
+
+        self.check_inputs()
 
     def randomise(self):
 
@@ -22,7 +30,7 @@ class Randomisation:
             if dist < self.tol:
                 print(
                     str(i) + " randomisations needed to achieve balance"
-                    "with tolerance " + str(self.tol)
+                    " with tolerance " + str(self.tol)
                 )
                 return t
         print("Did not achieve balance for tolerance " + str(self.tol))
@@ -50,3 +58,9 @@ class Randomisation:
             distance = np.sqrt(np.sum(sq_devs))
 
         return distance
+
+    def check_inputs(self):
+        check_tol(self.tol)
+        check_max_reps(self.max_reps)
+        check_distance_metric(self.distance_metric)
+        check_data(self.covariates)
