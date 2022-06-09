@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from utils.data_checks import (
+from rerand.utils.data_checks import (
     check_data,
     check_distance_metric,
     check_tol,

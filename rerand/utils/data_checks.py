@@ -1,5 +1,5 @@
 import numpy as np
-import utils.constants as cons
+import rerand.utils.constants as cons
 
 
 def check_data(x):
