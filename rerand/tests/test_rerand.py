@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from rerand import Randomisation
+from rerand.Randomisation import Randomisation
 
 
 @pytest.fixture
