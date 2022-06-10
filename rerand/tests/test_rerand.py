@@ -6,14 +6,16 @@ from rerand.Randomisation import Randomisation
 @pytest.fixture
 def standard_rand():
     """Returns a plain vanilla randomisation"""
-    x = np.random.normal(0, 1, 100)
+    x = np.random.normal(0, 1, 10)
     variants = {"control": 0.5, "treatment": 0.5}
+    seeds = range(100)
     return Randomisation(
         covariates=x,
         distance_metric="Euclidean",
-        tol=0.1,
+        tol=1,
         max_reps=100,
         variants=variants,
+        seeds=seeds,
     )
 
 
@@ -48,10 +50,28 @@ def multivar_rand():
 
 def test_Randomisation_init(standard_rand):
     """Test initiation of Randomisation class"""
-    assert len(standard_rand.covariates) == 100
-    assert standard_rand.tol == 0.1
+    assert len(standard_rand.covariates) == 10
+    assert standard_rand.tol == 1
     assert standard_rand.distance_metric == "Euclidean"
     assert standard_rand.max_reps == 100
+
+
+def test_Randomisation_seeds(standard_rand):
+    """Test returns expected randomisation"""
+    expected = [
+        "treatment",
+        "treatment",
+        "treatment",
+        "treatment",
+        "control",
+        "treatment",
+        "control",
+        "treatment",
+        "treatment",
+        "control",
+    ]
+    result = standard_rand.randomise()
+    assert np.array_equal(result, expected)
 
 
 def test_randomise_impossible(impossible_rand):
