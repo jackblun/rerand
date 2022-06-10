@@ -6,6 +6,7 @@ from rerand.utils.data_checks import (
     check_max_reps,
     check_tol,
     check_variants,
+    check_seeds,
 )
 import logging
 from numpy.typing import ArrayLike
@@ -30,6 +31,8 @@ class Randomisation:
         Maximum number of repeated randomisations
     variants : dict of str: float
         Variant names and randomisation probabilities
+    seeds (optional) : list
+        List of seeds for randomisations
 
     Methods
     -------
@@ -48,6 +51,7 @@ class Randomisation:
         tol: float,
         max_reps: float or int,
         variants: dict,
+        seeds: list[float] = None,
     ):
         logging.info("Initialising Randomisation class")
         self.covariates = covariates
@@ -56,6 +60,7 @@ class Randomisation:
         self.distance_metric = distance_metric
         self.n = len(self.covariates)
         self.variants = variants
+        self.seeds = seeds
 
         self.check_inputs()
 
@@ -78,6 +83,9 @@ class Randomisation:
 
             variant_names = list(self.variants.keys())
             probabilities = list(self.variants.values())
+
+            if self.seeds is not None:
+                np.random.seed(self.seeds[i])
             t = np.random.choice(variant_names, self.n, p=probabilities)
 
             covariates_by_t = []
@@ -145,3 +153,6 @@ class Randomisation:
         check_distance_metric(self.distance_metric)
         check_data(self.covariates)
         check_variants(self.variants)
+
+        if self.seeds is not None:
+            check_seeds(self.seeds, self.max_reps)

@@ -6,6 +6,7 @@ from rerand.utils.data_checks import (
     check_tol,
     check_max_reps,
     check_variants,
+    check_seeds,
 )
 
 
@@ -45,3 +46,11 @@ def test_check_variants():
     for i in invalid_variants:
         with pytest.raises(ValueError):
             check_variants(i)
+
+
+def test_check_seeds():
+    """Test invalid seeds entry causes error"""
+    seeds = [0, 1, 2]
+    max_reps = 100
+    with pytest.raises(ValueError):
+        check_seeds(seeds, max_reps)

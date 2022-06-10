@@ -96,3 +96,22 @@ def check_variants(variants: dict) -> None:
         raise ValueError("Must provide more than one variant.")
     if sum(variants.values()) != 1:
         raise ValueError("Randomisation probabilities must sum to 1.")
+
+
+def check_seeds(seeds: list, max_reps: int) -> None:
+    """
+    Check enough seeds provided.
+
+        Parameters
+        ----------
+        seeds : list
+            list of seeds
+        max_reps : int
+            maximum number of randomisations
+
+        Returns
+        -------
+            None (error if checks fail)
+    """
+    if len(seeds) < max_reps:
+        raise ValueError("Insufficient number of seeds provided.")
