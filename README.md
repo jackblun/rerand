@@ -7,3 +7,11 @@ For background on why we might want to rerandomise, and what that means for esti
 ## Installation
 
 This is a simple work in progress package with limited dependencies. It is not currently hosted on PyPi.
+
+To install Python package from github, you can clone this repository:
+
+`git clone https://github.com/jackblun/rerand.git`
+
+Then run the setup.py file from the main directory:
+
+`sudo python setup.py install`
