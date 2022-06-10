@@ -1,3 +1,4 @@
+from multiprocessing.dummy import Array
 import numpy as np
 from rerand.utils.data_checks import (
     check_data,
@@ -6,6 +7,7 @@ from rerand.utils.data_checks import (
     check_tol,
 )
 import logging
+from numpy.typing import ArrayLike
 
 logging.basicConfig(level=logging.NOTSET)
 
@@ -35,7 +37,13 @@ class Randomisation:
         Verify inputs are valid
     """
 
-    def __init__(self, covariates, distance_metric, tol, max_reps):
+    def __init__(
+        self,
+        covariates: ArrayLike,
+        distance_metric: str,
+        tol: float,
+        max_reps: float or int,
+    ):
         logging.info("Initialising Randomisation class")
         self.covariates = covariates
         self.tol = tol
@@ -45,7 +53,7 @@ class Randomisation:
 
         self.check_inputs()
 
-    def randomise(self):
+    def randomise(self) -> np.ndarray:
         """
         Generate balanced assignment vector.
 
@@ -83,7 +91,7 @@ class Randomisation:
                 return t
         logging.warning("Did not achieve balance, tolerance " + str(self.tol))
 
-    def distance(self, x0, x1, metric="Euclidean"):
+    def distance(self, x0: ArrayLike, x1: Array, metric: str = "Euclidean") -> float:
         """
         Calculate distance between two NxK numpy arrays.
 
@@ -116,7 +124,7 @@ class Randomisation:
 
         return distance
 
-    def check_inputs(self):
+    def check_inputs(self) -> None:
         check_tol(self.tol)
         check_max_reps(self.max_reps)
         check_distance_metric(self.distance_metric)

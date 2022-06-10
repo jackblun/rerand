@@ -1,8 +1,9 @@
 import numpy as np
 import rerand.utils.constants as cons
+from numpy.typing import ArrayLike
 
 
-def check_data(x):
+def check_data(x: ArrayLike) -> None:
     """
     Check covariates data is valid.
 
@@ -19,7 +20,7 @@ def check_data(x):
         raise ValueError("NaNs present in data.")
 
 
-def check_distance_metric(distance_metric):
+def check_distance_metric(distance_metric: str) -> None:
     """
     Check distance metric is valid.
 
@@ -40,7 +41,7 @@ def check_distance_metric(distance_metric):
     return None
 
 
-def check_max_reps(max_reps):
+def check_max_reps(max_reps: float or int) -> None:
     """
     Check max repititions is valid.
 
@@ -59,7 +60,7 @@ def check_max_reps(max_reps):
         raise ValueError("Max reps must not be less than 1")
 
 
-def check_tol(tol):
+def check_tol(tol: float) -> None:
     """
     Check chosen tolerance is valid.
 
