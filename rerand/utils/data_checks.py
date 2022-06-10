@@ -16,7 +16,7 @@ def check_data(x: ArrayLike) -> None:
         -------
             None (error if checks fail)
     """
-    if sum(np.isnan(x)) > 0:
+    if np.sum(np.sum(np.isnan(x))) > 0:
         raise ValueError("NaNs present in data.")
 
 

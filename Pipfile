@@ -10,6 +10,7 @@ pandas = "*"
 [dev-packages]
 pytest = "*"
 pre-commit = "*"
+ipykernel = "*"
 
 [requires]
 python_version = "3.10"
