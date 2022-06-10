@@ -5,6 +5,7 @@ from rerand.utils.data_checks import (
     check_distance_metric,
     check_tol,
     check_max_reps,
+    check_variants,
 )
 
 
@@ -36,3 +37,11 @@ def test_check_tol():
     for i in invalid_tols:
         with pytest.raises(ValueError):
             check_tol(i)
+
+
+def test_check_variants():
+    """Test invalid variant entry causes error"""
+    invalid_variants = [{"a": 1}, {"a": 0.5, "b": 0.2}]
+    for i in invalid_variants:
+        with pytest.raises(ValueError):
+            check_variants(i)

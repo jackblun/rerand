@@ -75,3 +75,24 @@ def check_tol(tol: float) -> None:
     """
     if tol <= 0:
         raise ValueError("Tolerance must be greater than 0")
+
+
+def check_variants(variants: dict) -> None:
+    """
+    Check variants are valid.
+
+        Parameters
+        ----------
+        variants : dict
+            dict of variant names and randomisation probabilities
+
+        Returns
+        -------
+            None (error if checks fail)
+    """
+    if type(variants) is not dict:
+        raise TypeError("Variants must be dictionary type.")
+    if len(variants) == 1:
+        raise ValueError("Must provide more than one variant.")
+    if sum(variants.values()) != 1:
+        raise ValueError("Randomisation probabilities must sum to 1.")

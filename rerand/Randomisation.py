@@ -5,9 +5,11 @@ from rerand.utils.data_checks import (
     check_distance_metric,
     check_max_reps,
     check_tol,
+    check_variants,
 )
 import logging
 from numpy.typing import ArrayLike
+from itertools import combinations
 
 logging.basicConfig(level=logging.NOTSET)
 
@@ -26,6 +28,8 @@ class Randomisation:
         Acceptable distance between groups
     max_reps : int or float
         Maximum number of repeated randomisations
+    variants : dict of str: float
+        Variant names and randomisation probabilities
 
     Methods
     -------
@@ -43,6 +47,7 @@ class Randomisation:
         distance_metric: str,
         tol: float,
         max_reps: float or int,
+        variants: dict,
     ):
         logging.info("Initialising Randomisation class")
         self.covariates = covariates
@@ -50,6 +55,7 @@ class Randomisation:
         self.max_reps = max_reps
         self.distance_metric = distance_metric
         self.n = len(self.covariates)
+        self.variants = variants
 
         self.check_inputs()
 
@@ -69,13 +75,22 @@ class Randomisation:
             Vector of treatment assignments
         """
         for i in range(self.max_reps):
-            t_p = np.random.uniform(low=0, high=1, size=self.n)
-            t = t_p > 0.5
 
-            x0 = self.covariates[~t]
-            x1 = self.covariates[t]
+            variant_names = list(self.variants.keys())
+            probabilities = list(self.variants.values())
+            t = np.random.choice(variant_names, self.n, p=probabilities)
 
-            dist = self.distance(x0, x1)
+            covariates_by_t = []
+            for vname in variant_names:
+                covariates_by_t.append(self.covariates[t == vname])
+
+            combos = list(combinations(covariates_by_t, 2))
+
+            dists = []
+            for combo in combos:
+                dists.append(self.distance(combo[0], combo[1]))
+
+            dist = max(dists)
             logging.info(
                 "Randomisation: "
                 + str(i + 1)
@@ -129,3 +144,4 @@ class Randomisation:
         check_max_reps(self.max_reps)
         check_distance_metric(self.distance_metric)
         check_data(self.covariates)
+        check_variants(self.variants)
