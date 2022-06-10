@@ -5,6 +5,7 @@ from rerand.utils.data_checks import (
     check_distance_metric,
     check_max_reps,
     check_tol,
+    check_variants,
 )
 import logging
 from numpy.typing import ArrayLike
@@ -143,3 +144,4 @@ class Randomisation:
         check_max_reps(self.max_reps)
         check_distance_metric(self.distance_metric)
         check_data(self.covariates)
+        check_variants(self.variants)
