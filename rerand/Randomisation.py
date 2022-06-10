@@ -11,6 +11,30 @@ logging.basicConfig(level=logging.NOTSET)
 
 
 class Randomisation:
+    """
+    A class to represent a randomisation.
+
+    Attributes
+    ----------
+    covariates : array-like
+        Array of covariates
+    distance_metric : str
+        Chosen distance metric on which to assess balance
+    tol : float
+        Acceptable distance between groups
+    max_reps : int or float
+        Maximum number of repeated randomisations
+
+    Methods
+    -------
+    randomise:
+        Perform full (re)randomisation process.
+    distance:
+        Calculate distance between groups.
+    check_inputs:
+        Verify inputs are valid
+    """
+
     def __init__(self, covariates, distance_metric, tol, max_reps):
         logging.info("Initialising Randomisation class")
         self.covariates = covariates
@@ -22,7 +46,20 @@ class Randomisation:
         self.check_inputs()
 
     def randomise(self):
+        """
+        Generate balanced assignment vector.
 
+        The core method of this module. The following steps are taken:
+        1. Randomise assignment.
+        2. Check for balance according to distance metric and tolerance.
+        3. Repeat steps 1 and 2 until balance achieved or maximum reps reached.
+        4. If balance achieved, return assignment vector.
+
+        Returns
+        -------
+        numpy.ndarray
+            Vector of treatment assignments
+        """
         for i in range(self.max_reps):
             t_p = np.random.uniform(low=0, high=1, size=self.n)
             t = t_p > 0.5
@@ -48,17 +85,26 @@ class Randomisation:
 
     def distance(self, x0, x1, metric="Euclidean"):
         """
-        Method that calculates distance between two NxK matrices,
+        Calculate distance between two NxK numpy arrays.
+
+        According to a specified distance metric, calculate the
+        difference between two numpy arrays.
         where N is the number of observations and K is the
         number of variables
 
-        Params:
-        - x0: NxK matrix of covariates from control group
-        - x1: NXK matrix of covaraites from treatment group
-        - metric: Distance metric used. Supported options are Euclidean.
+        Parameters
+        ----------
+        x0 : array-like
+            NxK array of covariates from control group
+        x1 : array-like
+            NXK array of covariates from treatment group
+        metric : str
+            distance metric used
 
-        Returns:
-        - distance: Distance between two matrices
+        Returns
+        -------
+        float
+            Distance between two matrices
         """
 
         x0_bar = np.mean(x0, axis=0)
