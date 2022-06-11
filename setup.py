@@ -1,21 +1,14 @@
-# -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
-
-
-with open("README.MD") as f:
-    readme = f.read()
-
-with open("LICENSE") as f:
-    license = f.read()
+from distutils.core import setup
 
 setup(
     name="rerand",
     version="0.1.0",
-    description="Tools for rerandomisation in randomised experiments.",
-    long_description=readme,
-    author="Jackblundell",
+    author="Jack Blundell",
     author_email="jackblun@gmail.com",
-    url="https://github.com/jackblun/rerand",
-    license=license,
-    packages=find_packages(exclude=("tests", "docs")),
+    packages=["rerand"],
+    url="http://pypi.python.org/pypi/rerand/",
+    license="LICENSE.txt",
+    description="Tools for rerandomisation in randomised experiments.",
+    long_description=open("README.txt").read(),
+    install_requires=["numpy >= 1.1.1"],
 )
