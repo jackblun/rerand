@@ -1,17 +1,12 @@
 # rerand
 
+
 `rerand` is a python package containing tools for rerandomisation in randomised experiments.
 
-For background on why we might want to rerandomise, and what that means for estimated treatment effects, see the [blog here](https://jackblundell.co.uk/posts/rerandomisation_p1/). An example of the package's functionality is given [here](https://github.com/jackblun/rerand/blob/develop/docs/examples/Example.ipynb).
+For background on why we might want to rerandomise, and what that means for estimated treatment effects, see the [blog here](https://jackblundell.co.uk/posts/rerandomisation_p1/). An example of the package's functionality is given in docs/examples.
 
 ## Installation
 
-This is a simple work in progress package with limited dependencies. It is not currently hosted on PyPi.
+The package is currently available on TestpyPI and can be installed as follows:
 
-To install Python package from github, you can clone this repository:
-
-`git clone https://github.com/jackblun/rerand.git`
-
-Then run the setup.py file from the main directory:
-
-`sudo python setup.py install`
+`pip install -i https://test.pypi.org/simple/ rerand==0.1.0`

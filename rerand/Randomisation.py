@@ -37,11 +37,11 @@ class Randomisation:
     Methods
     -------
     randomise:
-        Perform full (re)randomisation process.
+        perform full (re)randomisation process
     distance:
-        Calculate distance between groups.
+        calculate distance between groups
     check_inputs:
-        Verify inputs are valid
+        verify inputs are valid
     """
 
     def __init__(
@@ -77,7 +77,7 @@ class Randomisation:
         Returns
         -------
         numpy.ndarray
-            Vector of treatment assignments
+            vector of treatment assignments
         """
         for i in range(self.max_reps):
 
@@ -120,7 +120,7 @@ class Randomisation:
 
         According to a specified distance metric, calculate the
         difference between two numpy arrays.
-        where N is the number of observations and K is the
+        Where N is the number of observations and K is the
         number of variables
 
         Parameters
@@ -135,7 +135,7 @@ class Randomisation:
         Returns
         -------
         float
-            Distance between two matrices
+            distance between two matrices
         """
 
         x0_bar = np.mean(x0, axis=0)
